@@ -34,16 +34,10 @@ function render(variables = {}) {
   let lastName = variables.lastName || "'Apellido'";
 
   // Posicion de la Social Media
-  document
-    .querySelector(".picker[for='socialMediaPosition']")
-    .addEventListener("change", function(e) {
-      const socialMediaPosition = this.value; // Obtiene el valor seleccionado
-      const socialMediaIcons = document.querySelector(".widget ul"); // Selecciona el elemento <ul>
-
-      // Elimina la clase existente y agrega la nueva clase basada en la selección del usuario
-      socialMediaIcons.classList.remove("position-left", "position-right");
-      socialMediaIcons.classList.add(socialMediaPosition);
-    });
+  let socialMediaPosition =
+    variables.socialMediaPosition === "position-left"
+      ? "position-left"
+      : "position-right";
 
   // variable para obtener url de Twitter
   let twitterURL = variables.twitter || "https://twitter.com/4geeksacademy";
@@ -93,7 +87,7 @@ function render(variables = {}) {
           <h1>${name} ${lastName}</h1>
           <h2>Web Developer</h2>
           <h3>Miami, USA</h3>
-          <ul class="position-right">
+          <ul class="${socialMediaPosition}">
             <li><a href="${twitterURL}"><i class="fab fa-twitter"></i></a></li>
             <li><a href="${githubURL}"><i class="fab fa-github"></i></a></li>
             <li><a href="${linkedinURL}"><i class="fab fa-linkedin"></i></a></li>
