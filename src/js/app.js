@@ -29,18 +29,75 @@ function render(variables = {}) {
   let cover = `<div class="cover"><img src="${variables.background}" /></div>`;
   if (variables.includeCover == false) cover = "<div class='cover'></div>";
 
+  //Modificando el Nombre y Apellido
+  let name = variables.name || "'Nombre'";
+  let lastName = variables.lastName || "'Apellido'";
+
+  // Posicion de la Social Media
+  document
+    .querySelector(".picker[for='socialMediaPosition']")
+    .addEventListener("change", function(e) {
+      const socialMediaPosition = this.value; // Obtiene el valor seleccionado
+      const socialMediaIcons = document.querySelector(".widget ul"); // Selecciona el elemento <ul>
+
+      // Elimina la clase existente y agrega la nueva clase basada en la selección del usuario
+      socialMediaIcons.classList.remove("position-left", "position-right");
+      socialMediaIcons.classList.add(socialMediaPosition);
+    });
+
+  // variable para obtener url de Twitter
+  let twitterURL = variables.twitter || "https://twitter.com/4geeksacademy";
+
+  // variable para obtener url de Github
+  let githubURL = variables.github || "https://github.com/4geeksacademy";
+
+  // variable para obtener url de Linkedin
+  let linkedinURL =
+    variables.linkedin || "https://linkedin.com/school/4geeksacademy";
+
+  // variable para obtener url de Instagram
+  let instagramURL =
+    variables.instagram || "https://instagram.com/4geeksacademy";
+
+  // Seleccionar el Rol
+  document
+    .querySelector(".picker[for='role']")
+    .addEventListener("change", function() {
+      const selectedRole = this.value; //obtener el valor del elemento select
+      const h2Element = document.querySelector(".widget h2");
+      h2Element.textContent = selectedRole; // Actualiza el contenido de h2 con el rol seleccionado
+    });
+
+  //Ciudad y Pais
+  // Seleccionar el City y el Country
+  document
+    .querySelectorAll(".picker[for='city'], .picker[for='country']")
+    .forEach(function(elm) {
+      elm.addEventListener("change", function(e) {
+        const selectedCity = document.querySelector(".picker[for='city']")
+          .value; // Obtener la ciudad seleccionada
+        const selectedCountry = document.querySelector(".picker[for='country']")
+          .value; // Obtener el país seleccionado
+
+        // Actualizar el contenido del elemento <h3> correspondiente al City y Country
+        document.querySelector(
+          ".widget h3"
+        ).textContent = `${selectedCity}, ${selectedCountry}`;
+      });
+    });
+
   // reset the website body with the new html output
   document.querySelector("#widget_content").innerHTML = `<div class="widget">
             ${cover}
           <img src="${variables.avatarURL}" class="photo" />
-          <h1>Lucy Boilett</h1>
+          <h1>${name} ${lastName}</h1>
           <h2>Web Developer</h2>
           <h3>Miami, USA</h3>
           <ul class="position-right">
-            <li><a href="https://twitter.com/4geeksacademy"><i class="fab fa-twitter"></i></a></li>
-            <li><a href="https://github.com/4geeksacademy"><i class="fab fa-github"></i></a></li>
-            <li><a href="https://linkedin.com/school/4geeksacademy"><i class="fab fa-linkedin"></i></a></li>
-            <li><a href="https://instagram.com/4geeksacademy"><i class="fab fa-instagram"></i></a></li>
+            <li><a href="${twitterURL}"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="${githubURL}"><i class="fab fa-github"></i></a></li>
+            <li><a href="${linkedinURL}"><i class="fab fa-linkedin"></i></a></li>
+            <li><a href="${instagramURL}"><i class="fab fa-instagram"></i></a></li>
           </ul>
         </div>
     `;
